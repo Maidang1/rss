@@ -6,7 +6,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Providers>
       <LayoutHeader />
-      <Component {...pageProps} />
+      <div className="max-w-[1024px] w-full h-full overflow-auto mx-auto">
+        <Component {...pageProps} />
+      </div>
     </Providers>
   )
 }

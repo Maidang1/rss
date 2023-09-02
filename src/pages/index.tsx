@@ -1,8 +1,35 @@
-/// github/repos/:user
+import React from "react"
+import { Tabs, Tab, Card, CardBody } from "@nextui-org/react"
+import { FeedAll } from "@/components/all"
+
 export default function Home() {
+  let tabs = [
+    {
+      id: "ALL",
+      label: "ALL",
+      component: <FeedAll />,
+    },
+    {
+      id: "Subscription",
+      label: "Subscription",
+      component: <div>Subscription</div>,
+    },
+    {
+      id: "More",
+      label: "More",
+      component: <div>More</div>,
+    },
+  ]
+
   return (
-    <main className="prose lg:prose-xl max-w-[700px] mx-auto mt-6">
-      <h1 className="text-center">A RSSHub Client</h1>
-    </main>
+    <div className="flex w-full flex-col mt-6">
+      <Tabs aria-label="Dynamic tabs" items={tabs}>
+        {(item) => (
+          <Tab key={item.id} title={item.label}>
+            {item.component}
+          </Tab>
+        )}
+      </Tabs>
+    </div>
   )
 }

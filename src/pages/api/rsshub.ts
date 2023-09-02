@@ -70,3 +70,5 @@ export default async function handler(
     },
   })
 }
+
+// http://localhost:3000/api/userinfo?code=5bcca0eba9ddd6335c47
