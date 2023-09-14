@@ -3,8 +3,6 @@ import {
   Navbar,
   NavbarContent,
   NavbarItem,
-  Link,
-  Button,
   NavbarBrand,
   Skeleton,
   Avatar,
@@ -12,12 +10,16 @@ import {
 } from "@nextui-org/react"
 import useSWR from "swr"
 import NextLink from "next/link"
+import { useAtomValue } from "jotai"
+import { userLoadingAtom, userAtom } from "@/store/user"
 
 export const LayoutHeader = () => {
   const { data, isLoading } = useSWR("api/user", async (args) => {
     const res = await fetch(args)
     return await res.json()
   })
+  const loading = useAtomValue(userLoadingAtom)
+  const user = useAtomValue(userAtom)
   return (
     <Navbar isBordered className="flex w-full">
       <NavbarContent justify="start">
@@ -29,35 +31,23 @@ export const LayoutHeader = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        {isLoading ? (
+        {loading ? (
           <>
             <Skeleton className="flex rounded-full w-8 h-8" />
             <Skeleton className="rounded w-[60px] h-[20px]" />
           </>
         ) : (
           <>
-            {data?.id ? (
+            {user?.fullName ? (
               <User
-                name={data.name}
+                name={user.fullName}
                 avatarProps={{
-                  src: data.avatar_url,
+                  src: user.avatarUrl,
                   size: "sm",
                 }}
               />
             ) : (
-              <Button
-                className="rounded-full w-10 h-10"
-                as={Link}
-                onClick={(e) => {
-                  e.preventDefault()
-                  window.open(
-                    `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${WEBSITE_URL}/api/login`
-                  )
-                }}
-                variant="flat"
-              >
-                Login
-              </Button>
+              <Avatar name="Joe" src="https://images.unsplash.com/broken" />
             )}
           </>
         )}
