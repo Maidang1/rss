@@ -12,12 +12,13 @@ import useSWR from "swr"
 import NextLink from "next/link"
 import { useAtomValue } from "jotai"
 import { userLoadingAtom, userAtom } from "@/store/user"
+import { useRouter } from "next/router"
+import { AUTH_ROUTER } from "@/constance"
 
 export const LayoutHeader = () => {
-  const { data, isLoading } = useSWR("api/user", async (args) => {
-    const res = await fetch(args)
-    return await res.json()
-  })
+  const router = useRouter()
+  const { route } = router
+  const isAuthPath = AUTH_ROUTER.has(route)
   const loading = useAtomValue(userLoadingAtom)
   const user = useAtomValue(userAtom)
   return (
@@ -31,7 +32,7 @@ export const LayoutHeader = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        {loading ? (
+        {loading && isAuthPath ? (
           <>
             <Skeleton className="flex rounded-full w-8 h-8" />
             <Skeleton className="rounded w-[60px] h-[20px]" />
@@ -47,7 +48,7 @@ export const LayoutHeader = () => {
                 }}
               />
             ) : (
-              <Avatar name="Joe" src="https://images.unsplash.com/broken" />
+              <Avatar name="" />
             )}
           </>
         )}

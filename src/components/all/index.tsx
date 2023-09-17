@@ -1,11 +1,12 @@
 import { Button, Card, CardFooter, Skeleton, Link } from "@nextui-org/react"
 import useSWR from "swr"
-
+import { Chip } from "@nextui-org/react"
 export const FeedAll = () => {
-  const { data, isLoading } = useSWR("/api/feed-all", async (args) => {
+  const { data, isLoading, error } = useSWR("/api/feed-all", async (args) => {
     const res = await fetch(args)
     return await res.json()
   })
+  console.log("feed-all", data)
 
   if (isLoading) {
     return (
@@ -15,15 +16,26 @@ export const FeedAll = () => {
       </div>
     )
   }
+  if (error) {
+    return <div>{error?.message}</div>
+  }
+  const { data: realData = [] } = data
   return (
     <ul className="h-full">
-      {data.map((item: any) => (
-        <li
-          key={item.id}
-          className="cursor-pointer flex px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-gray-100 dark:hover:bg-gray-50/10"
-        >
-          <a href={item.url}>{item.title}</a>
-        </li>
+      {realData.map(({ metaData, data: feedData, _id }: any) => (
+        <div key={_id}>
+          <Chip className="mt-6">form {metaData?.name || "internet"}</Chip>
+          {feedData.map((feed: any) => (
+            <li key={feed.url}>
+              <a
+                href={feed.link}
+                className="cursor-pointer flex px-3 py-2 mt-2 mr-2 rounded-md transition-colors decoration-none hover:bg-gray-100 dark:hover:bg-gray-50/10"
+              >
+                {feed.title}
+              </a>
+            </li>
+          ))}
+        </div>
       ))}
     </ul>
   )

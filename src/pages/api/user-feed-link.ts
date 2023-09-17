@@ -1,15 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { SERVER_URL } from '@/constance';
-import { execSQL } from '@/database/db';
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest } from 'next/server';
 
 export const config = {
   runtime: 'edge',
 }
-export default async function handler() {
-
+export default async function get(req: NextRequest) {
+  console.log("NextRequest", req.nextUrl.search)
   try {
-    const data = await fetch(`http://127.0.0.1:8080/rss`, {
+    const data = await fetch(`${SERVER_URL}/rss/user/link${req.nextUrl.search}`, {
       method: "GET",
     })
     const res = await data.json()
