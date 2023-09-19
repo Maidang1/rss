@@ -7,8 +7,9 @@ import Cookies from "js-cookie"
 import { userStore, userAtom, User, userLoadingAtom } from "@/store/user"
 import { useAtom, useSetAtom } from "jotai"
 
-const anonKey = ""
-const supabaseUrl = ""
+const supabaseUrl = "https://fxsxedmgqjcfdmjxjbwy.supabase.co"
+const anonKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4c3hlZG1ncWpjZmRtanhqYnd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODkzNTU2MTAsImV4cCI6MjAwNDkzMTYxMH0.yFnAzA9mH0keAwzEoG0TVXqSy_ujwVsv7jLpxhV_YSg"
 
 const supabase = createClient(supabaseUrl, anonKey, {
   auth: {

@@ -3,6 +3,7 @@ import { Tabs, Tab, Card, CardBody } from "@nextui-org/react"
 import { FeedAll } from "@/components/all"
 import { useRouter } from "next/router"
 import { My } from "@/components/my"
+import { FeedUserSubScription } from "@/components/subscription"
 
 const tabs = [
   {
@@ -13,12 +14,7 @@ const tabs = [
   {
     id: "Subscription",
     label: "Subscription",
-    component: <div>Subscription</div>,
-  },
-  {
-    id: "More",
-    label: "More",
-    component: <div>More</div>,
+    component: <FeedUserSubScription />,
   },
   {
     id: "my",
